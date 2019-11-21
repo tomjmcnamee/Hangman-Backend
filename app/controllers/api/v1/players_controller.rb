@@ -1,28 +1,32 @@
-class Api::V1::PlayerController < ApplicationController
+class Api::V1::PlayersController < ApplicationController
 
 
-  def update
+  def check
     if Player.find_by(name: params[:name])
       player = Player.find_by(name: params[:name])
-      player.update(games_played: player.total_games + 1)
       render json: player
     else
-      player = Player.new(name: params[:name])
-      player.update(games_played: player.total_games + 1)
+      player = Player.create(name: params[:name])
       render json: player
     end
   end
 
+  def newGame
+    player = Player.find_by(name: params[:name])
+    player.update(total_games: player.total_games + 1)
+    render json: player
+  end
+
   def win
     player = Player.find_by(name: params[:name])
-    player.update(games_played: player.total_wins + 1
+    player.update(total_wins: player.total_wins + 1)
     render json: player
-
   end
+
 
   private
 
-  def playter_params
+  def player_params
     params.require(:player).permit(:name, :games_played, :total_wins)
   end
 end

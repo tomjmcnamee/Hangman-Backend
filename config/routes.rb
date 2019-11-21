@@ -2,10 +2,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :players 
+      # resources :players 
       resources :quotes 
-      patch "/players/:id/update", to: "players#update"
-      patch "/players/:id/win", to: "players#win"
+      get "/players/:name/check", to: "players#check"
+      patch "/players/:name/newGame", to: "players#newGame"
+      patch "/players/:name/win", to: "players#win"
       # get "/quotes", to: "quotes#index"
     end
   end
